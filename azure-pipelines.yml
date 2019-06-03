@@ -14,7 +14,7 @@ steps:
     azureSubscription: $(azureSubscription)
     action: Create Or Update Resource Group
     resourceGroupName: $(resourceGroupName)
-    deploymentName: Create Golden Image
+    deploymentName: CreateGoldenImage
     location: eastasia
     templateLocation: Linked artifact
     csmFile: src/template.json
