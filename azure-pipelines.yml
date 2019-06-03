@@ -13,7 +13,7 @@ variables:
 
 steps:
 # - script: echo '##vso[task.setvariable variable=uniqueId]$(Build.SourceVersion)'
-  - script: echo '##vso[task.setvariable variable=uniqudId]golden-image'
+  - script: echo '##vso[task.setvariable variable=uniqueId]golden-image'
   - task: AzureResourceGroupDeployment@2
     inputs:
       azureSubscription: $(azureSubscription)
