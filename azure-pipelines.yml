@@ -5,8 +5,11 @@ pool:
   vmImage: 'vs2017-win2016'
 
 variables:
-  azureSubscription: 'PALO IT Azure Subscription'
-  resourceGroupName: 'azure-golden-image-rg'
+  - group: GoldenImageSecret
+  - name: azureSubscription
+    value: 'PALO IT Azure Subscription'
+  - name: resourceGroupName
+    value: 'azure-golden-image-rg'
 
 steps:
 - task: AzureResourceGroupDeployment@2
