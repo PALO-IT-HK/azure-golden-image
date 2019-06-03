@@ -8,10 +8,11 @@ variables:
   - group: GoldenImageSecret
   - name: azureSubscription
     value: 'PALO IT Azure Subscription'
-  - name: resourceGroupName
-    value: 'azure-golden-image-rg'
+  - name: resourceGroupPrefix
+    value: 'golden-image-rg'
 
 steps:
+- script: echo '##vso[task.setvariable variable=resourceGroupName]$(resouceGroupPrefix)-$(Build.SourceVersion)'
 - task: AzureResourceGroupDeployment@2
   inputs:
     azureSubscription: $(azureSubscription)
