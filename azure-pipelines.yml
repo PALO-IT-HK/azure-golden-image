@@ -13,7 +13,8 @@ variables:
 
 steps:
 # - script: echo '##vso[task.setvariable variable=uniqueId]$(Build.SourceVersion)'
-  - script: echo "##vso[task.setvariable variable=uniqueId]golden-image-$(Build.BuildId)"
+  - script: echo ##vso[task.setvariable variable=uniqueId]golden-image-$(Build.BuildId)
+  - script: echo $(uniqueId)
   - task: AzureResourceGroupDeployment@2
     inputs:
       azureSubscription: $(azureSubscription)
@@ -24,6 +25,6 @@ steps:
       templateLocation: Linked artifact
       csmFile: src/template.json
       csmParametersFile: src/parameters.json
-      overrideParameters: -adminPassword "$(secretAdminPassword)" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)" -virtualNetworkName "$(uniqueId)-vnet" -networkInterfaceName "$(uniqueId)-nic" 
+      overrideParameters: -adminPassword "$(secretAdminPassword)" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)" -virtualNetworkName "$(uniqueId)-vnet" -networkInterfaceName "$(uniqueId)-nic" -networkSecurityGroupName "$(uniqueId)-nsg" -publicIpAddressName "$(uniqueId)-ip"
       # overrideParameters: -adminPassword "$(secretAdminPassword)" -networkInterfaceName "$(uniqueId)-nic" -networkSecurityGroupName "$(uniqueId)-nsg" -virtualNetworkName "$(uniqueId)-vnet" -publicIpAddressName "$(uniqueId)-ip" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)"
       deploymentMode: incremental
