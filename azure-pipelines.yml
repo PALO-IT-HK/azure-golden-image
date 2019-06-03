@@ -27,3 +27,4 @@ steps:
       csmParametersFile: src/parameters.json
       overrideParameters: -adminPassword "$(secretAdminPassword)" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)" -virtualNetworkName "$(uniqueId)-vnet" -networkInterfaceName "$(uniqueId)-nic" -networkSecurityGroupName "$(uniqueId)-nsg" -publicIpAddressName "$(uniqueId)-ip"
       deploymentMode: incremental
+      enableDeploymentPrerequisites: configureVMwithWinRM
