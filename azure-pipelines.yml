@@ -5,7 +5,7 @@ pool:
   vmImage: 'vs2017-win2016'
 
 variables:
-  azureSubscription: '2df4b63b-fc82-4d28-9ebd-5169d2f46507'
+  azureSubscription: 'PALO IT Azure Subscription'
   resourceGroupName: 'azure-golden-image-rg'
 
 steps:
