@@ -24,6 +24,6 @@ steps:
       templateLocation: Linked artifact
       csmFile: src/template.json
       csmParametersFile: src/parameters.json
-      overrideParameters: -adminPassword "$(secretAdminPassword)" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)" -virtualNetworkName "$(uniqueId)-vnet" -networkInterfaceName "$(uniqueId)-nic" -networkSecurityGroupName "$(uniqueId)-nsg" -publicIpAddressName "$(uniqueId)-ip"
+      overrideParameters: -adminPassword "$(secretAdminPassword)" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)" -virtualNetworkName "$(uniqueId)-vnet" -networkInterfaceName "$(uniqueId)-nic" 
       # overrideParameters: -adminPassword "$(secretAdminPassword)" -networkInterfaceName "$(uniqueId)-nic" -networkSecurityGroupName "$(uniqueId)-nsg" -virtualNetworkName "$(uniqueId)-vnet" -publicIpAddressName "$(uniqueId)-ip" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)"
       deploymentMode: incremental
