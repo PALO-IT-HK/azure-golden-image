@@ -7,7 +7,7 @@ pool:
 variables:
   - group: GoldenImageSecret
   - name: azureSubscription
-    value: 'PALO IT Azure Subscription'
+    value: 'PALO IT Sandbox'
   - name: resourceGroupName
     value: 'golden-image-rg'
 
