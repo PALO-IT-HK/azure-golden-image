@@ -236,7 +236,7 @@
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/compilationjobs/', guid(resourceGroup().id, deployment().name))]",
-                "[concat('Microsoft.Automation/virtualMachines/', parameters('virtualMachineName'))]"
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
             ],
             "properties": {
                 "publisher": "Microsoft.Powershell",
