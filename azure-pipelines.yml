@@ -2,7 +2,7 @@ trigger:
   - master
 
 pool:
-  vmImage: 'vs2017-win2016'
+  name: Hosted VS2017
 
 variables:
   - group: GoldenImageSecret
@@ -12,9 +12,25 @@ variables:
     value: 'golden-image-rg'
 
 steps:
-# - script: echo '##vso[task.setvariable variable=uniqueId]$(Build.SourceVersion)'
+  - powershell: |
+      Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+      Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+      Invoke-ScriptAnalyzer -Path ./src -Setting PSGallery -Recurse
+    displayName: Analyse scripts coding quality
   - powershell: Write-Host "##vso[task.setvariable variable=uniqueId]gi-base-$(Build.BuildId)"
+
   - powershell: Write-Host $(uniqueId)
+
+  - task: AzureFileCopy@2
+    displayName: Upload DSC Configuration source to Storage Artifact Store
+    inputs:
+      sourcePath: src/vsts-agent.ps1
+      azureSubscription: PALO IT Sandbox
+      destination: azureBlob
+      storage: coachingdeploy001
+      containerName: devops
+      blobPrefix: azure-devops-agent-dsc/dsc/vsts-agent/$(Build.SourceBranchName)/$(Build.SourceVersion)/
+
   - task: AzureResourceGroupDeployment@2
     inputs:
       azureSubscription: $(azureSubscription)
