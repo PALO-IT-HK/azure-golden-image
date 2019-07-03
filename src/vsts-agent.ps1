@@ -1,5 +1,6 @@
 Configuration VstsAgentConfig {
     Import-DscResource -ModuleName xPSDesiredStateConfiguration
+    Import-DscResource –ModuleName PSDesiredStateConfiguration
 
     $packageBasePath = "C:\DSC_Packages"
 
