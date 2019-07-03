@@ -52,6 +52,21 @@
         },
         "adminPassword": {
             "type": "secureString"
+        },
+        "automationAccountName": {
+          "type": "string"
+        },
+        "configName": {
+            "type": "string"
+        },
+        "configVersion": {
+            "type": "string"
+        },
+        "configUrl": {
+            "type": "string"
+        },
+        "configDescription": {
+            "type": "string"
         }
     },
     "variables": {
@@ -164,6 +179,50 @@
                         "enableAutomaticUpdates": true,
                         "provisionVmAgent": true
                     }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts",
+            "apiVersion": "2015-10-31",
+            "name": "[parameters('automationAccountName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [],
+            "tags": {},
+            "properties": {
+                "sku": {
+                    "name": "Basic"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/configurations",
+            "apiVersion": "2015-10-31",
+            "name": "[concat(parameters('automationAccountName'), '/', parameters('configName'))]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "logVerbose": true,
+                "logProgress": true,
+                "source": {
+                    "type": "uri",
+                    "value": "[parameters('configUrl')]",
+                    "version": "[parameters('configVersion')]"
+                },
+                "parameters": {},
+                "description": "[parameters('configDescription')]"
+            }
+        },
+        {
+            "type": "Microsoft.Automation/automationAccounts/compilationjobs",
+            "apiVersion": "2018-01-15",
+            "name": "[concat(parameters('automationAccountName'), '/', guid(resourceGroup().id, deployment().name))]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Automation/automationAccounts/', parameters('automationAccountName'), '/configurations/', parameters('configName'))]"
+            ],
+            "properties": {
+                "configuration": {
+                    "name": "[parameters('configName')]"
                 }
             }
         }

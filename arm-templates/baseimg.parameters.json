@@ -92,6 +92,21 @@
         },
         "adminPassword": {
             "value": null
+        },
+        "automationAccountName": {
+          "value": "coaching-automation"
+        },
+        "configName": {
+            "value": "VstsAgentConfig"
+        },
+        "configVersion": {
+            "value": "1.0.0"
+        },
+        "configUrl": {
+            "value": "https://coachingdeploy001.blob.core.windows.net/devops/vsts-agent.ps1"
+        },
+        "configDescription": {
+            "value": "Download and Install VSTS Agent"
         }
     }
 }
