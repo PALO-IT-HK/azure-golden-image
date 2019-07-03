@@ -82,7 +82,7 @@
             "value": "RGAzureGoldenImage"
         },
         "osDiskType": {
-            "value": "Premium_LRS"
+            "value": "Standard_LRS"
         },
         "virtualMachineSize": {
             "value": "Standard_B2ms"
@@ -107,6 +107,9 @@
         },
         "configDescription": {
             "value": "Download and Install VSTS Agent"
+        },
+        "nodeConfigurationName": {
+            "value": "VstsAgentConfig.VstsAgent"
         }
     }
 }

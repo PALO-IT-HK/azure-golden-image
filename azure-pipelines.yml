@@ -10,6 +10,8 @@ variables:
     value: 'PALO IT Sandbox'
   - name: resourceGroupName
     value: 'coaching-rg'
+  - name: uniqueId
+    value: vsts-agent
 
 steps:
   - powershell: |
@@ -17,7 +19,7 @@ steps:
       Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
       Invoke-ScriptAnalyzer -Path ./src -Setting PSGallery -Recurse
     displayName: Analyse scripts coding quality
-  - powershell: Write-Host "##vso[task.setvariable variable=uniqueId]gi-base-$(Build.BuildId)"
+  # - powershell: Write-Host "##vso[task.setvariable variable=uniqueId]gi-base-$(Build.BuildId)"
 
   - powershell: Write-Host $(uniqueId)
 
