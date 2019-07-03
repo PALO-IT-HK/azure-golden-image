@@ -38,7 +38,7 @@ steps:
       azureSubscription: $(azureSubscription)
       action: Create Or Update Resource Group
       resourceGroupName: $(resourceGroupName)
-      deploymentName: CreateGoldenImage
+      deploymentName: vsts-agent-image-$(Build.SourceBranchName)-$(Build.SourceVersion)
       location: eastasia
       templateLocation: Linked artifact
       csmFile: arm-templates/baseimg.template.json
