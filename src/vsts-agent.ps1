@@ -11,16 +11,6 @@ Configuration VstsAgentConfig {
     $packagePath = "$packageBasePath\$vstsFile"
     $installPath = "C:\Vsts_Agent"
 
-    $DnsName = "127.0.0.1"
-
-    $Cert = New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName $DnsName -Verbose
-    $Password = ConvertTo-SecureString -String $DnsName -Force -AsPlainText -Verbose
-
-    Export-Certificate -Cert $Cert -FilePath .\$DnsName.cer -Verbose
-    Export-PfxCertificate -Cert $Cert -FilePath .\$DnsName.pfx -Password $Password -Verbose
-
-    $CertThumbprint = $Cert.Thumbprint
-
     Node VstsAgent {
         File DownloadFolder {
             Type = "Directory"
@@ -50,22 +40,35 @@ Configuration VstsAgentConfig {
             Destination = "$installPath"
         }
 
-        Script EnableRemote {
-            SetScript = {
-                Enable-PSRemoting -Force -Verbose
-                Set-Item WSMan:\localhost\Client\TrustedHosts * -Force -Verbose
-                New-Item -Path WSMan:\localhost\Listener -Transport HTTPS -Address * -CertificateThumbPrint $CertThumbprint -Force -Verbose
-                Restart-Service WinRM -Verbose
-                New-NetFirewallRule -DisplayName "Windows Remote Management (HTTPS-In)" -Name "WinRMHTTPSIn" -Profile Any -LocalPort 5986 -Protocol TCP -Verbose
-            }
-            TestScript = {
-              # Test-Path "C:\TempFolder\TestFile.txt"
-            }
-            GetScript = {
-                @{
-                    Result = (Get-Content C:\TempFolder\TestFile.txt)
-                }
-            }
-        }
+        # Script EnableWinRM {
+        #     SetScript = {
+        #         $DnsName = "localhost"
+
+        #         $Cert = New-SelfSignedCertificate -CertStoreLocation Cert:\LocalMachine\My -DnsName $DnsName -Verbose
+        #         $Password = ConvertTo-SecureString -String $DnsName -Force -AsPlainText -Verbose
+
+        #         Export-Certificate -Cert $Cert -FilePath .\$DnsName.cer -Verbose
+        #         Export-PfxCertificate -Cert $Cert -FilePath .\$DnsName.pfx -Password $Password -Verbose
+
+        #         $CertThumbprint = $Cert.Thumbprint
+
+        #         Enable-PSRemoting -Force -Verbose
+        #         Set-Item WSMan:\localhost\Client\TrustedHosts * -Force -Verbose
+        #         New-Item -Path WSMan:\localhost\Listener -Transport HTTPS -Address * -CertificateThumbPrint $CertThumbprint -Force -Verbose
+        #         New-NetFirewallRule -DisplayName "Windows Remote Management (HTTPS-In)" -Name "WinRMHTTPSIn" -Profile Any -LocalPort 5986 -Protocol TCP -Verbose
+                
+        #         # TODO: Move restart service outside the script to have it governed by DSC
+        #         Restart-Service WinRM -Verbose
+        #     }
+        #     TestScript = {
+        #         return $true
+        #       # Test-Path "C:\TempFolder\TestFile.txt"
+        #     }
+        #     GetScript = {
+        #         @{
+        #             Result = (Get-Content C:\TempFolder\TestFile.txt)
+        #         }
+        #     }
+        # }
     }
 }
