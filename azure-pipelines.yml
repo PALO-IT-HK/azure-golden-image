@@ -1,0 +1,46 @@
+trigger:
+  - master
+
+pool:
+  name: Hosted VS2017
+
+variables:
+  - group: GoldenImageSecret
+  - name: azureSubscription
+    value: 'PALO IT Sandbox'
+  - name: resourceGroupName
+    value: 'golden-image-rg'
+
+steps:
+  - powershell: |
+      Install-PackageProvider -Name NuGet -Force -Scope CurrentUser
+      Install-Module -Name PSScriptAnalyzer -Force -Scope CurrentUser
+      Invoke-ScriptAnalyzer -Path ./src -Setting PSGallery -Recurse
+    displayName: Analyse scripts coding quality
+  - powershell: Write-Host "##vso[task.setvariable variable=uniqueId]gi-base-$(Build.BuildId)"
+
+  - powershell: Write-Host $(uniqueId)
+
+  - task: AzureFileCopy@2
+    displayName: Upload DSC Configuration source to Storage Artifact Store
+    inputs:
+      sourcePath: src/vsts-agent.ps1
+      azureSubscription: PALO IT Sandbox
+      destination: azureBlob
+      storage: coachingdeploy001
+      containerName: devops
+      blobPrefix: azure-devops-agent-dsc/dsc/vsts-agent/$(Build.SourceBranchName)/$(Build.SourceVersion)/
+
+  - task: AzureResourceGroupDeployment@2
+    inputs:
+      azureSubscription: $(azureSubscription)
+      action: Create Or Update Resource Group
+      resourceGroupName: $(resourceGroupName)
+      deploymentName: CreateGoldenImage
+      location: eastasia
+      templateLocation: Linked artifact
+      csmFile: src/template.json
+      csmParametersFile: src/parameters.json
+      overrideParameters: -adminPassword "$(secretAdminPassword)" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)" -virtualNetworkName "$(uniqueId)-vnet" -networkInterfaceName "$(uniqueId)-nic" -networkSecurityGroupName "$(uniqueId)-nsg" -publicIpAddressName "$(uniqueId)-ip"
+      deploymentMode: incremental
+      enableDeploymentPrerequisites: configureVMwithWinRM
