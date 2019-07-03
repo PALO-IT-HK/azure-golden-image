@@ -39,8 +39,8 @@ steps:
       deploymentName: CreateGoldenImage
       location: eastasia
       templateLocation: Linked artifact
-      csmFile: src/template.json
-      csmParametersFile: src/parameters.json
+      csmFile: arm-templates/baseimg.template.json
+      csmParametersFile: arm-templates/baseimg.parameters.json
       overrideParameters: -adminPassword "$(secretAdminPassword)" -virtualMachineName "$(uniqueId)-vm" -virtualMachineRG "$(resourceGroupName)" -virtualNetworkName "$(uniqueId)-vnet" -networkInterfaceName "$(uniqueId)-nic" -networkSecurityGroupName "$(uniqueId)-nsg" -publicIpAddressName "$(uniqueId)-ip"
       deploymentMode: incremental
       enableDeploymentPrerequisites: configureVMwithWinRM
