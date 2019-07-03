@@ -9,7 +9,7 @@ variables:
   - name: azureSubscription
     value: 'PALO IT Sandbox'
   - name: resourceGroupName
-    value: 'golden-image-rg'
+    value: 'coaching-rg'
 
 steps:
   - powershell: |
