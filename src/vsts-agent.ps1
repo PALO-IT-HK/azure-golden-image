@@ -69,7 +69,3 @@ Configuration VstsAgentConfig {
         }
     }
 }
-
-VstsAgentConfig
-
-Start-DscConfiguration -Path .\VstsAgentConfig -Wait -Force -Verbose

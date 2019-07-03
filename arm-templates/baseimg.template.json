@@ -51,7 +51,7 @@
             "type": "string"
         },
         "adminPassword": {
-            "type": "secureString"
+            "type": "securestring"
         },
         "automationAccountName": {
           "type": "string"
