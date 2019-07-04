@@ -34,9 +34,10 @@ steps:
       blobPrefix: azure-devops-agent-dsc/dsc/vsts-agent/$(Build.SourceBranchName)/$(Build.SourceVersion)/
 
   - task: PublishBuildArtifacts@1
+    displayName: Publish Build Artifact for ARM Templates
     inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)/arm-templates'
-      ArtifactName: 'arm-templates'
+      pathtoPublish: $(Build.SourcesDirectory)/arm-templates
+      artifactName: 'arm-templates'
 
   - task: AzureResourceGroupDeployment@2
     inputs:
