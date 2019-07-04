@@ -128,7 +128,7 @@
       "location": "[parameters('location')]",
       "dependsOn": [
         "[concat('Microsoft.Network/networkInterfaces/', variables('nicName'))]",
-        "[variables('imageName')]"
+        "[parameters('imageName')]"
       ],
       "properties": {
         "hardwareProfile": {
@@ -141,7 +141,7 @@
         },
         "storageProfile": {
           "imageReference": {
-            "id": "[resourceId('Microsoft.Compute/images', variables('imageName'))]"
+            "id": "[resourceId('Microsoft.Compute/images', parameters('imageName'))]"
           }
         },
         "networkProfile": {
