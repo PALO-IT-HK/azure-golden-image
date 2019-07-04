@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "imageName": {
+          "value": "agentimg"
+      },
+      "customName": {
+          "value": "agentfromimg"
+      },
+      "adminUsername": {
+          "value": "vmadmin"
+      },
+      "adminPassword": {
+          "value": null
+      },
+      "osDiskVhdUri": {
+          "value": "GEN-SPECIALIZED-WINVHD-URI"
+      },
+      "dnsLabelPrefix": {
+          "value": "GEN-UNIQUE-8"
+      },
+      "osType": {
+          "value": "Windows"
+      },
+      "vmSize": {
+          "value": "Standard_A2"
+      },
+      "virtualNetworkName": {
+          "value": "imgnet"
+      }
+  }
+}
