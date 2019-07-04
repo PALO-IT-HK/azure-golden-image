@@ -33,6 +33,11 @@ steps:
       containerName: devops
       blobPrefix: azure-devops-agent-dsc/dsc/vsts-agent/$(Build.SourceBranchName)/$(Build.SourceVersion)/
 
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)/arm-templates'
+      ArtifactName: 'arm-templates'
+
   - task: AzureResourceGroupDeployment@2
     inputs:
       azureSubscription: $(azureSubscription)
