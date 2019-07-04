@@ -25,9 +25,6 @@
       },
       "vmSize": {
           "value": "Standard_A2"
-      },
-      "virtualNetworkName": {
-          "value": "imgnet"
       }
   }
 }
